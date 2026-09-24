@@ -3,6 +3,7 @@
 
 int main() {
     int choice;
+    int sortChoice = 1;
     AddressBook addressBook;
     initialize(&addressBook); // Initialize the address book
 

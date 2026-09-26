@@ -112,8 +112,68 @@ void createContact(AddressBook *addressBook)
     
         printf("Phone number accepted: %s\n\n", addressBook->contacts[index].phone);
 
+
+        while(1)
+        {
+            printf("Enter email: ");
+            scanf("%s", addressBook->contacts[index].email);
+            while(getchar()!='\n');
+
+            int len = strlen(addressBook->contacts[index].email);
+            int isValid = 1;
+
+            for (int i=0;i<len;i++)
+            {
+                if (isupper(addressBook->contacts[index].email[i]))
+                {
+                    isValid = 0;
+                    break;
+                }
+            }
+            if(isValid==0)
+            {
+                printf("invalid email! capital letter is not allowed.\n");
+                continue;
+            }
+            if(addressBook->contacts[index].email[0]=='@')
+            {
+                printf("invalid email! first letter should be an alphabet.\n");
+                continue;
+            }
+            int atcount=0;
+            int atindex=-1;
+            for(int i=0;i<len;i++)
+            {
+                if(addressBook->contacts[index].email[i] == '@')
+                {
+                    atcount++;
+                    atindex=i;
+                }
+            }
+            if(atcount!=1)
+            {
+                printf("invalid email! must contain only one '@' symbol\n");
+                continue;
+            }
+            if(len<5 ||strcmp(&addressBook->contacts[index].email[len-4], ".com")!=0)
+            {
+                printf("invalid email! email must end with '.com'\n");
+                continue;
+            }
+            if((len-4)-atindex<=1)
+            {
+                printf("invalid email! must contain domain name (at least 1 character between '@' and '.com')\n");
+                continue;
+            }
+            break;
+        }
+        printf("Email accepted: %s\n", addressBook->contacts[index].email);
         addressBook->contactCount++;
+
+        printf("Contact created successfully! Total contacts: %d\n", addressBook->contactCount);
+
 }
+
 
 void searchContact(AddressBook *addressBook) 
 {

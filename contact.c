@@ -43,13 +43,13 @@ void listContacts(AddressBook *addressBook, int sortCriteria)
     }
 
     sortContactsByName(addressBook);
-    
+
     printHeader();
 
     // prints the content in rows
-    for (int i = 0; i < addressBook->contactCount; i++)
+    for (int i=0;i<addressBook->contactCount;i++)
     {
-        printf("%-6d %-20s %-16s %-30s\n",i + 1,addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
+        printf("%-6d %-20s %-16s %-30s\n",i+1,addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
     }
 
     printf("=======================================================================\n");

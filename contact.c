@@ -6,11 +6,56 @@
 // #include "file.h"
 // #include "populate.h"
 
-void listContacts(AddressBook *addressBook, int sortCriteria) 
+// Func 1: Sort contacts alphabetically by Name
+void sortContactsByName(AddressBook *addressBook)
 {
-    // Sort contacts based on the choosen criteria
-    
+    int count=addressBook->contactCount;
+    for(int i=0;i < count-1;i++)
+    {
+        for(int j=0;j < count-i-1;j++)
+        {
+            if(strcmp(addressBook->contacts[j].name, addressBook->contacts[j+1].name) > 0)
+            {
+                Contact temp = addressBook->contacts[j];
+                addressBook->contacts[j] = addressBook->contacts[j+1];
+                addressBook->contacts[j+1] = temp;
+            }
+        }
+    }
 }
+
+// Func 2: Print formatted table header
+void printHeader(void)
+{
+    printf("\n=======================================================================\n");
+    printf("%-6s %-20s %-16s %-30s\n", "S.No", "Name", "Phone Number", "Email");
+    printf("-----------------------------------------------------------------------\n");
+}
+
+// Func 3: Main list function
+void listContacts(AddressBook *addressBook, int sortCriteria)
+{
+    // if no contact found
+    if (addressBook->contactCount == 0)
+    {
+        printf("\nNo contacts found!\n\n");
+        return;
+    }
+
+    sortContactsByName(addressBook);
+    
+    printHeader();
+
+    // prints the content in rows
+    for (int i = 0; i < addressBook->contactCount; i++)
+    {
+        printf("%-6d %-20s %-16s %-30s\n",i + 1,addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
+    }
+
+    printf("=======================================================================\n");
+    printf("Total Contacts: %d\n\n", addressBook->contactCount);
+}  
+
 
 void initialize(AddressBook *addressBook) {
     addressBook->contactCount = 0;

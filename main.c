@@ -3,7 +3,7 @@
 
 int main() {
     int choice;
-    int sortChoice = 1;
+    // int sortChoice = 1;
     AddressBook addressBook;
     initialize(&addressBook); // Initialize the address book
 
@@ -33,7 +33,7 @@ int main() {
                 deleteContact(&addressBook);
                 break;
             case 5:          
-                listContacts(&addressBook, sortChoice);
+                listContacts(&addressBook, 0);
                 break;
             case 6:
                 printf("Saving...\n");

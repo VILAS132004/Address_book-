@@ -14,16 +14,17 @@ typedef struct {
     int contactCount;
 } AddressBook;
 
-void sortContactsByName(AddressBook *addressBook);
-void printHeader(void);
+// void sortContactsByName(AddressBook *addressBook);
+
 
 void createContact(AddressBook *addressBook);
 void searchContact(AddressBook *addressBook);
 void editContact(AddressBook *addressBook);
 void deleteContact(AddressBook *addressBook);
-void listContacts(AddressBook *addressBook, int sortCriteria);
+void listContacts(AddressBook *addressBook);
 void sortContacts(AddressBook *addressBook);
 void initialize(AddressBook *addressBook);
 void saveContactsToFile(AddressBook *AddressBook);
+void loadContactsFromFile(AddressBook *addressBook);
 
 #endif

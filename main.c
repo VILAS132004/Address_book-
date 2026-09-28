@@ -33,11 +33,11 @@ int main() {
                 deleteContact(&addressBook);
                 break;
             case 5:          
-                listContacts(&addressBook, 0);
+                listContacts(&addressBook);
                 break;
             case 6:
-                printf("Saving...\n");
-                //saveContactsToFile(&addressBook);
+                // printf("Saving...\n");
+                saveContactsToFile(&addressBook);
                 break;   
             case 7:
                 printf("Exiting...\n");

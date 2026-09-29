@@ -104,7 +104,7 @@ void listContacts(AddressBook *addressBook)
 
 
 void initialize(AddressBook *addressBook) {
-    addressBook->contactCount = 0;
+    // addressBook->contactCount = 0;
     
     // Load contacts from file during initialization (After files)
     loadContactsFromFile(addressBook);
@@ -311,20 +311,329 @@ void createContact(AddressBook *addressBook)
     printf("Contact created successfully! Total contacts: %d\n\n", addressBook->contactCount);
 }
 
-
-void searchContact(AddressBook *addressBook) 
+void searchContact(AddressBook *addressBook)
 {
-    /* Define the logic for search */
+    if (addressBook->contactCount == 0)
+    {
+        printf("Address book is empty!\n\n");
+        return;
+    }
+
+    int choice;
+    printf("Search Contact By:\n");
+    printf("1. Name\n");
+    printf("2. Phone Number\n");
+    printf("3. Email\n");
+    printf("Enter choice: ");
+    scanf("%d", &choice);
+    while (getchar() != '\n'); // Clear input buffer
+
+    char searchTerm[100];
+    int matches[100]; 
+    int matchCount = 0;
+
+    if (choice == 1)
+    {
+        printf("Enter name to search: ");
+        scanf(" %[^\n]", searchTerm);
+
+        for (int i = 0; i < addressBook->contactCount; i++)
+        {
+            if (strcasestr(addressBook->contacts[i].name, searchTerm) != NULL)
+            {
+                matches[matchCount] = i;
+                matchCount++;
+                printf("%d: %s\n", matchCount, addressBook->contacts[i].name);
+            }
+        }
+    }
+    else if (choice == 2)
+    {
+        printf("Enter phone number to search: ");
+        scanf("%s", searchTerm);
+
+        for (int i = 0; i < addressBook->contactCount; i++)
+        {
+            if (strcasestr(addressBook->contacts[i].phone, searchTerm) != NULL)
+            {
+                matches[matchCount] = i;
+                matchCount++;
+                printf("%d: %s\n", matchCount, addressBook->contacts[i].phone);
+            }
+        }
+    }
+    else if (choice == 3)
+    {
+        printf("Enter email to search: ");
+        scanf("%s", searchTerm);
+
+        for (int i = 0; i < addressBook->contactCount; i++)
+        {
+            if (strcasestr(addressBook->contacts[i].email, searchTerm) != NULL)
+            {
+                matches[matchCount] = i;
+                matchCount++;
+                printf("%d: %s\n", matchCount, addressBook->contacts[i].email);
+            }
+        }
+    }
+    else
+    {
+        printf("Invalid choice!\n\n");
+        return;
+    }
+
+    if (matchCount == 0)
+    {
+        printf("No contact found matching '%s'.\n\n", searchTerm);
+        return;
+    }
+
+    int selection;
+    printf("which one: ");
+    scanf("%d", &selection);
+
+    if (selection >= 1 && selection <= matchCount)
+    {
+        int selectedIndex = matches[selection - 1];
+        printf("Name  : %s\n", addressBook->contacts[selectedIndex].name);
+        printf("Phone : %s\n", addressBook->contacts[selectedIndex].phone);
+        printf("Email : %s\n\n", addressBook->contacts[selectedIndex].email);
+    }
+    else
+    {
+        printf("Invalid selection!\n\n");
+    }
 }
+    
+
 
 void editContact(AddressBook *addressBook)
 {
 	/* Define the logic for Editcontact */
-    
+    int Searchchoice;
+    char searchTerm[100];
+    int matching_index[100];
+    int found = 0;
+    int num;
+    int edit_index;
+    int editchoice;
+    int i;
+
+    if (addressBook->contactCount == 0)
+    {
+        printf("Address book is empty!\n\n");
+        return;
+    }
+    printf("Edit Contact By:\n");
+    printf("1. Name\n");
+    printf("2. Phone Number\n");
+    printf("3. Email\n");
+    printf("Enter choice: ");
+    scanf("%d", &Searchchoice);
+    while (getchar() != '\n');
+
+    if (Searchchoice == 1)
+    {
+        printf("Enter name to Edit: ");
+        scanf(" %[^\n]", searchTerm);
+
+        for (i = 0; i < addressBook->contactCount; i++)
+        {
+            if (strcasestr(addressBook->contacts[i].name, searchTerm) != NULL)
+            {
+                matching_index[found] = i;
+                found++;
+                printf("%d. %s\n", found, addressBook->contacts[i].name);
+            }
+        }
+    }
+    else if (Searchchoice == 2)
+    {
+        printf("Enter phone number to edit: ");
+        scanf("%s", searchTerm);
+
+        for (i = 0; i < addressBook->contactCount; i++)
+        {
+            if (strcasestr(addressBook->contacts[i].phone, searchTerm) != NULL)
+            {
+                matching_index[found] = i;
+                found++;
+                printf("%d. %s\n", found, addressBook->contacts[i].phone);
+            }
+        }
+    }
+    else if (Searchchoice == 3)
+    {
+        printf("Enter email to edit: ");
+        scanf("%s", searchTerm);
+
+        for (i = 0; i < addressBook->contactCount; i++)
+        {
+            if (strcasestr(addressBook->contacts[i].email, searchTerm) != NULL)
+            {
+                matching_index[found] = i;
+                found++;
+                printf("%d. %s\n", found, addressBook->contacts[i].email);
+            }
+        }
+    }
+    else
+    {
+        printf("Invalid choice!\n\n");
+        return;
+    }
+
+    if (found == 0)
+    {
+        printf("No matching contact found to edit.\n\n");
+        return;
+    }
+    printf("Select a Contact: ");
+    scanf("%d", &num);
+
+    if (num < 1 || num > found)
+    {
+        printf("Invalid selection!\n\n");
+        return;
+    }
+
+    edit_index = matching_index[num - 1];
+
+    printf("\nWhat do you want to edit?\n");
+    printf("1. Name\n");
+    printf("2. Phone Number\n");
+    printf("3. Email\n");
+    printf("Enter choice: ");
+    scanf("%d", &editchoice);
+    while (getchar() != '\n');
+
+    if (editchoice == 1)
+    {
+        printf("Enter new name: ");
+        scanf(" %[^\n]", addressBook->contacts[edit_index].name);
+    }
+    else if (editchoice == 2)
+    {
+        printf("Enter new phone number: ");
+        scanf("%s", addressBook->contacts[edit_index].phone);
+    }
+    else if (editchoice == 3)
+    {
+        printf("Enter new email: ");
+        scanf("%s", addressBook->contacts[edit_index].email);
+    }
+    else
+    {
+        printf("Invalid choice!\n\n");
+        return;
+    }
+
+    printf("Contact updated successfully!\n\n");
 }
+
+
 
 void deleteContact(AddressBook *addressBook)
 {
 	/* Define the logic for deletecontact */
-   
+    int choice;
+    char searchTerm[100];
+    int matching_index[100];
+    int found = 0;
+    int num;
+    int del_index;
+    int i;
+
+    if (addressBook->contactCount == 0)
+    {
+        printf("Address book is empty!\n\n");
+        return;
+    }
+
+    printf("Delete Contact By:\n");
+    printf("1. Name\n");
+    printf("2. Phone Number\n");
+    printf("3. Email\n");
+    printf("Enter choice: ");
+    scanf("%d", &choice);
+    while (getchar() != '\n');
+
+    if (choice == 1)
+    {
+        printf("Enter name to delete: ");
+        scanf(" %[^\n]", searchTerm);
+
+        for (i = 0; i < addressBook->contactCount; i++)
+        {
+            if (strcasestr(addressBook->contacts[i].name, searchTerm) != NULL)
+            {
+                matching_index[found] = i;
+                found++;
+                printf("%d. %s\n", found, addressBook->contacts[i].name);
+            }
+        }
+    }
+    else if (choice == 2)
+    {
+        printf("Enter phone number to delete: ");
+        scanf("%s", searchTerm);
+
+        for (i = 0; i < addressBook->contactCount; i++)
+        {
+            if (strcasestr(addressBook->contacts[i].phone, searchTerm) != NULL)
+            {
+                matching_index[found] = i;
+                found++;
+                printf("%d. %s\n", found, addressBook->contacts[i].phone);
+            }
+        }
+    }
+    else if (choice == 3)
+    {
+        printf("Enter email to delete: ");
+        scanf("%s", searchTerm);
+
+        for (i = 0; i < addressBook->contactCount; i++)
+        {
+            if (strcasestr(addressBook->contacts[i].email, searchTerm) != NULL)
+            {
+                matching_index[found] = i;
+                found++;
+                printf("%d. %s\n", found, addressBook->contacts[i].email);
+            }
+        }
+    }
+    else
+    {
+        printf("Invalid choice!\n\n");
+        return;
+    }
+
+    if (found == 0)
+    {
+        printf("No matching contact found to delete.\n\n");
+        return;
+    }
+
+    printf("Select a Contact: ");
+    scanf("%d", &num);
+
+    if (num < 1 || num > found)
+    {
+        printf("Invalid selection!\n\n");
+        return;
+    }
+
+    del_index = matching_index[num - 1];
+
+    for (i = del_index; i < addressBook->contactCount - 1; i++)
+    {
+        addressBook->contacts[i] = addressBook->contacts[i + 1];
+    }
+
+    addressBook->contactCount--;
+
+    printf("Contact deleted successfully!\n\n");
 }
+   

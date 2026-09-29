@@ -36,7 +36,7 @@ int main() {
                 listContacts(&addressBook);
                 break;
             case 6:
-                // printf("Saving...\n");
+                printf("Saving...\n");
                 saveContactsToFile(&addressBook);
                 break;   
             case 7:

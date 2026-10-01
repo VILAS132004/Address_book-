@@ -10,7 +10,7 @@ void saveContactsToFile(AddressBook *addressBook)
         return;
     }
 
-    fprintf(file,"%d\n",addressBook->contactCount);
+    fprintf(file,"# %d\n",addressBook->contactCount);
 
     for(int i=0;i<addressBook->contactCount;i++)
     {
@@ -28,7 +28,7 @@ void loadContactsFromFile(AddressBook *addressBook)
         addressBook->contactCount=0;
         return;
     }
-    if(fscanf(file,"%d\n",&addressBook->contactCount)!=1)
+    if(fscanf(file,"# %d\n",&addressBook->contactCount)!=1)
     {
         addressBook->contactCount=0;
         fclose(file);

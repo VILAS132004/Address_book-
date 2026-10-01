@@ -343,7 +343,7 @@ void searchContact(AddressBook *addressBook)
             {
                 matches[matchCount] = i;
                 matchCount++;
-                printf("%d: %s\n", matchCount, addressBook->contacts[i].name);
+                printf("%d: %s %s %s\n", matchCount, addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
         }
     }
@@ -358,7 +358,7 @@ void searchContact(AddressBook *addressBook)
             {
                 matches[matchCount] = i;
                 matchCount++;
-                printf("%d: %s\n", matchCount, addressBook->contacts[i].phone);
+                printf("%d: %s %s %s\n", matchCount, addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
         }
     }
@@ -373,7 +373,7 @@ void searchContact(AddressBook *addressBook)
             {
                 matches[matchCount] = i;
                 matchCount++;
-                printf("%d: %s\n", matchCount, addressBook->contacts[i].email);
+                printf("%d: %s %s %s\n", matchCount, addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
         }
     }
@@ -410,7 +410,7 @@ void searchContact(AddressBook *addressBook)
 
 void editContact(AddressBook *addressBook)
 {
-	/* Define the logic for Editcontact */
+    /* Define the logic for Editcontact */
     int Searchchoice;
     char searchTerm[100];
     int matching_index[100];
@@ -444,7 +444,7 @@ void editContact(AddressBook *addressBook)
             {
                 matching_index[found] = i;
                 found++;
-                printf("%d. %s\n", found, addressBook->contacts[i].name);
+                printf("%d. %s %s %s\n", found, addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
         }
     }
@@ -459,7 +459,7 @@ void editContact(AddressBook *addressBook)
             {
                 matching_index[found] = i;
                 found++;
-                printf("%d. %s\n", found, addressBook->contacts[i].phone);
+                printf("%d. %s %s %s\n", found, addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
         }
     }
@@ -474,7 +474,7 @@ void editContact(AddressBook *addressBook)
             {
                 matching_index[found] = i;
                 found++;
-                printf("%d. %s\n", found, addressBook->contacts[i].email);
+                printf("%d. %s %s %s\n", found, addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
         }
     }
@@ -508,25 +508,53 @@ void editContact(AddressBook *addressBook)
     scanf("%d", &editchoice);
     while (getchar() != '\n');
 
-    if (editchoice == 1)
+if (editchoice == 1)
     {
-        printf("Enter new name: ");
-        scanf(" %[^\n]", addressBook->contacts[edit_index].name);
+        int isValid = 0;
+        do
+        {
+            printf("Enter new name: ");
+            scanf(" %[^\n]", addressBook->contacts[edit_index].name);
+            
+            validateName(addressBook, edit_index, &isValid);
+            
+            if (!isValid)
+            {
+                printf("Invalid name! Please enter again.\n");
+            }
+        } while (!isValid);
     }
     else if (editchoice == 2)
     {
-        printf("Enter new phone number: ");
-        scanf("%s", addressBook->contacts[edit_index].phone);
+        int isValid = 0;
+        do
+        {
+            printf("Enter new phone number: ");
+            scanf("%s", addressBook->contacts[edit_index].phone);
+            
+            validatePhone(addressBook, edit_index, &isValid);
+            
+            if (!isValid)
+            {
+                printf("Invalid phone number! Please enter again.\n");
+            }
+        } while (!isValid);
     }
     else if (editchoice == 3)
     {
-        printf("Enter new email: ");
-        scanf("%s", addressBook->contacts[edit_index].email);
-    }
-    else
-    {
-        printf("Invalid choice!\n\n");
-        return;
+        int isValid = 0;
+        do
+        {
+            printf("Enter new email: ");
+            scanf("%s", addressBook->contacts[edit_index].email);
+            
+            validateEmail(addressBook, edit_index, &isValid);
+            
+            if (!isValid)
+            {
+                printf("Invalid email! Please enter again.\n");
+            }
+        } while (!isValid);
     }
 
     printf("Contact updated successfully!\n\n");
@@ -570,7 +598,7 @@ void deleteContact(AddressBook *addressBook)
             {
                 matching_index[found] = i;
                 found++;
-                printf("%d. %s\n", found, addressBook->contacts[i].name);
+                printf("%d. %s %s %s\n", found, addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
         }
     }
@@ -585,7 +613,7 @@ void deleteContact(AddressBook *addressBook)
             {
                 matching_index[found] = i;
                 found++;
-                printf("%d. %s\n", found, addressBook->contacts[i].phone);
+                printf("%d. %s %s %s\n", found, addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
         }
     }
@@ -600,7 +628,7 @@ void deleteContact(AddressBook *addressBook)
             {
                 matching_index[found] = i;
                 found++;
-                printf("%d. %s\n", found, addressBook->contacts[i].email);
+                printf("%d. %s %s %s\n", found, addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
         }
     }
